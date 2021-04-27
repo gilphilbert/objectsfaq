@@ -155,7 +155,7 @@ input[type='color']:focus, input[type='date']:focus, input[type='datetime']:focu
                 <span class="answer" v-bind:class="{ 'open': faq.open }" v-html="faq.a"></span>
               </div>
               <span v-if="faqs.every(e => e.hidden === true)">
-                <a :href="`mailto:${contact}?subject=New%20question%20for%20${title}%20FAQ&body=I'd like to add a new question to the ${title} FAQ%0A%0AQ:%0AA:`">No answer to your question? Submit it</a>
+                <p>Can't find your question?</p><a class="button" href="https://github.com/gilphilbert/objectsfaq/issues/new/choose">Submit your question</a>
               </span>
             </div>
           </div>
