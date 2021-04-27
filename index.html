@@ -162,7 +162,7 @@ input[type='color']:focus, input[type='date']:focus, input[type='datetime']:focu
 new Vue({
   el: '#app',
   created() {
-    window.fetch('./faqs.json')
+    window.fetch('faqs.json')
       .then(result => result.json())
       .then(json => {
         const converter = new showdown.Converter()
