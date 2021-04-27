@@ -1,14 +1,16 @@
-const cacheName = 'faqs-v1'
+const cacheName = 'faqs-v1.0.1'
 const cacheFiles = [
   '/objectsfaq/index.html',
   '/objectsfaq/faqs.json',
+
   '/objectsfaq/favicon.ico',
-  '/objectsfaq/icon-16x16.png',
-  '/objectsfaq/icon-32x32.png',
-  '/objectsfaq/icon-192x192.png',
-  '/objectsfaq/icon-256x256.png',
-  '/objectsfaq/icon-384x384.png',
-  '/objectsfaq/icon-512x512.png',
+  '/objectsfaq/favicon-16x16.png',
+  '/objectsfaq/favicon-32x32.png',
+  '/objectsfaq/android-chrome-192x192',
+  '/objectsfaq/android-chrome-512x512',
+  '/objectsfaq/apple-touch-icon.png',
+
+  '/objectsfaq/site.webmanifest',
 
   'https://cdn.jsdelivr.net/npm/vue@2.6.12',
   'https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic',
@@ -21,7 +23,7 @@ const cacheFiles = [
 self.addEventListener('install', evt => {
   evt.waitUntil(
     caches.open(cacheName).then(cache => {
-      return cache.addAll(cacheFiles)
+      return cache.addAll(cacheFiles).catch(e => console.log(e))
     })
   )
   self.skipWaiting()
