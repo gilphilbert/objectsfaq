@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <base href="/">
     <title>FAQ</title>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/objectsfaq/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/objectsfaq/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/objectsfaq/favicon-16x16.png">
+    <link rel="manifest" href="/objectsfaq/site.webmanifest">
+    <!-- <link rel="mask-icon" href="/objectsfaq/safari-pinned-tab.svg" color="#eac03e">-->
+    <link rel="shortcut icon" href="/objectsfaq/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Objects FAQ">
+    <meta name="application-name" content="Objects FAQ">
+    <meta name="msapplication-TileColor" content="#4379BD">
+    <meta name="theme-color" content="#4379BD">
+    <meta name="Description" content="Frequently asked questions for Nutanix Objects">
 
     <!-- prerequisite scripts -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
@@ -162,7 +174,7 @@ input[type='color']:focus, input[type='date']:focus, input[type='datetime']:focu
 new Vue({
   el: '#app',
   created() {
-    window.fetch('faqs.json')
+    window.fetch('/objectsfaq/faqs.json')
       .then(result => result.json())
       .then(json => {
         const converter = new showdown.Converter()
