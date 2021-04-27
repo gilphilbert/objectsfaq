@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <base href="/">
     <title>FAQ</title>
     
     <link rel="apple-touch-icon" sizes="180x180" href="/objectsfaq/apple-touch-icon.png">
@@ -24,7 +23,7 @@
     <style>
 #app {
   display: none;
-}s
+}
 #app.show {
   display: block;
 }
@@ -121,7 +120,7 @@ input[type='color']:focus, input[type='date']:focus, input[type='datetime']:focu
     </style>
   </head>
   <body>
-    <div id="app" v-bind:class="{ show: this.ready }">
+    <div id="app" class="show" v-bind:class="{ show: this.ready }">
       <section class="background-primary hero">
         <div class="container">
           <div class="row">

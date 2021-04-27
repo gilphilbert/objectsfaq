@@ -6,8 +6,8 @@ const cacheFiles = [
   '/objectsfaq/favicon.ico',
   '/objectsfaq/favicon-16x16.png',
   '/objectsfaq/favicon-32x32.png',
-  '/objectsfaq/android-chrome-192x192',
-  '/objectsfaq/android-chrome-512x512',
+  '/objectsfaq/android-chrome-192x192.png',
+  '/objectsfaq/android-chrome-512x512.png',
   '/objectsfaq/apple-touch-icon.png',
 
   '/objectsfaq/site.webmanifest',
