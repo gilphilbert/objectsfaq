@@ -1,0 +1,14 @@
+{
+  "theme_color": "#4379BD",
+  "background_color": "#4379BD",
+  "display": "standalone",
+  "scope": "https://gilphilbert.github.io/objectsfaq/",
+  "start_url": "https://gilphilbert.github.io/objectsfaq/",
+  "name": "Nutanix Objects FAQ",
+  "short_name": "Objects FAQ",
+  "description": "FAQ for Nutanix Objects",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
