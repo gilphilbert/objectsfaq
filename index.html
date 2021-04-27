@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+    <title>FAQ</title>
+
+    <!-- prerequisite scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
+    <!-- application components -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+    <style>
+#app {
+  display: none;
+}
+#app.show {
+  display: block;
+}
+form {
+  margin-bottom: 0
+}
+nav {
+  margin-top: 1rem;
+  text-align: center;
+}
+.background-primary {
+  background-color: #4379BD;
+  color: #fff;
+}
+.background-gray {
+  background-color: #eee;
+}
+section {
+  padding: 2rem;
+}
+section.hero {
+  padding: 5rem 0;
+}
+section.hero h1 {
+  margin: 0;
+}
+fieldset, input, select, textarea {
+  margin: 0;
+  background-color: #fff;
+}
+.faq {
+  overflow: hidden;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+}
+.faq p.question {
+  margin: 0;
+  font-size: 1.2em;
+}
+.faq p.question a {
+  color: #4379BD;
+}
+.faq a:focus {
+  color: #034EA2;
+}
+.faq span.answer {
+  display: block;
+  overflow: hidden;
+  max-height: 0;
+  margin: 0;
+}
+.faq span.answer blockquote,
+.faq span.answer dl,
+.faq span.answer figure,
+.faq span.answer form,
+.faq span.answer ol,
+.faq span.answer p,
+.faq span.answer pre,
+.faq span.answer table,
+.faq span.answer ul,
+.faq span.answer ol {
+  margin-bottom: 1rem
+}
+.faq span.answer dl li,
+.faq span.answer ul li,
+.faq span.answer ol li {
+  margin-bottom: 0.25rem
+}
+.faq span.answer.open { 
+  max-height: inherit;   
+  margin: 0.5rem 0 0 0; 
+}
+.button, button, input[type='button'], input[type='reset'], input[type='submit'] {
+  background-color: #034EA2;
+  border-color: #034EA2;
+  color: #fff;
+}
+.button.button-clear:focus, .button.button-clear:hover, button.button-clear:focus, button.button-clear:hover, input[type='button'].button-clear:focus, input[type='button'].button-clear:hover, input[type='reset'].button-clear:focus, input[type='reset'].button-clear:hover, input[type='submit'].button-clear:focus, input[type='submit'].button-clear:hover {
+  color: #fff;
+  background-color: #4379BD;
+}
+.button.button-clear, button.button-clear, input[type='button'].button-clear, input[type='reset'].button-clear, input[type='submit'].button-clear,
+a {
+  color: #034EA2;
+}
+.button:focus, .button:hover, button:focus, button:hover, input[type='button']:focus, input[type='button']:hover, input[type='reset']:focus, input[type='reset']:hover, input[type='submit']:focus, input[type='submit']:hover {
+  background-color: #034EA2;
+  border-color: #034EA2;
+  color: #fff;
+}
+input[type='color']:focus, input[type='date']:focus, input[type='datetime']:focus, input[type='datetime-local']:focus, input[type='email']:focus, input[type='month']:focus, input[type='number']:focus, input[type='password']:focus, input[type='search']:focus, input[type='tel']:focus, input[type='text']:focus, input[type='url']:focus, input[type='week']:focus, input:not([type]):focus, textarea:focus, select:focus {
+  border-color: #034EA2;
+}
+    </style>
+  </head>
+  <body>
+    <div id="app" v-bind:class="{ show: this.ready }">
+      <section class="background-primary hero">
+        <div class="container">
+          <div class="row">
+            <div class="column">
+              <h1>{{ title }} FAQs</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="background-gray">
+        <div class="container">
+          <div class="row">
+            <div class="column">
+              <form>
+                <fieldset>
+                  <input type="text" placeholder="What's your question?" v-model="filterString" @keyUp="faqs.forEach(e => e.hidden = (!e.q.toLowerCase().includes(filterString.toLowerCase()) && !e.a.toLowerCase().includes(filterString.toLowerCase())))">
+                </fieldset>
+              </form>
+              <nav>
+                <button v-for="cat in categories" class="button" v-bind:class="{ 'button-clear': !cat.active }" @click="selectCat(cat.title)">{{ cat.title }}</button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="">
+        <div class="container">
+          <div class="row">
+            <div class="column">
+              <div class="faq" v-for="faq in faqs" v-if="faq.hidden !== true">
+                <p class="question"><a href="#" @click="faq.open = !faq.open">{{ faq.q }}?</a></p>
+                <span class="answer" v-bind:class="{ 'open': faq.open }" v-html="faq.a"></span>
+              </div>
+              <span v-if="faqs.every(e => e.hidden === true)">
+                <a :href="`mailto:${contact}?subject=New%20question%20for%20${title}%20FAQ&body=I'd like to add a new question to the ${title} FAQ%0A%0AQ:%0AA:`">No answer to your question? Submit it</a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+
+  <script>
+new Vue({
+  el: '#app',
+  created() {
+    window.fetch('/faqs.json')
+      .then(result => result.json())
+      .then(json => {
+        const converter = new showdown.Converter()
+
+        let faqs = json.faqs
+        faqs.forEach(x => { x.hidden = false; x.open = false; x.a = converter.makeHtml(x.a) })
+        let cats = [{ title: 'all', active: true }].concat(faqs.filter((tag, index, array) => array.findIndex(t => t.category === tag.category) === index).map(el => { return { title: el.category, active: false } }))
+
+        this.faqs = faqs
+        this.title = json.name
+        this.contact = json.contact
+        this.categories = cats
+
+        this.ready = true
+      })
+  },
+  data: {
+      ready: false,
+      title: '',
+      contact: '',
+      faqs: [],
+      filterString: '',
+      categories: []
+  },
+  methods: {
+    selectCat (title) {
+      this.faqs.forEach(e => e.hidden = (( title !== 'all') && e.category !== title))
+      this.categories.forEach(e => e.active = e.title === title)
+      this.filterString = ''
+    }
+  }
+})
+
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js')
+}
+  </script>
+</html>
